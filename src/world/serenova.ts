@@ -1,0 +1,1 @@
+export const serenova = {planet:"Tervac",continent:"Evrosia",empire:"Magical Empire",kingdom:"Solterra",duchy:"Terravelle",barony:"Serenova",affinities:["Earth","Water"],duchies:["Terravelle","Costa Maris","Florencia","Monteluna","Auravale","Rivermoor","Emberfall","Silvaterra"]} as const;
