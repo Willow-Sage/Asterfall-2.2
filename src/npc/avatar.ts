@@ -94,7 +94,8 @@ export function createNpcAvatar(npc:Npc):THREE.Group{
 }
 /** Safe animation of generated mesh hierarchy (GLB export is STATIC; this animation is runtime code). */
 export function animateNpc(root:THREE.Group,elapsed:number,isWalking:boolean){
- const limbs=animationPivots.get(root);\n if(!limbs)return;
+ const limbs=animationPivots.get(root);
+ if(!limbs)return;
  const phase=elapsed*5.8;
  for(let i=0;i<2;i++){
   if(limbs.legs?.[i])limbs.legs[i].rotation.x=isWalking?Math.sin(phase+i*Math.PI)*0.42:0;
