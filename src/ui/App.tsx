@@ -1,8 +1,11 @@
-import {Component,useState,type ReactNode} from "react";
-import {assets} from "../assets/manifest";
-import {VisualScene} from "../rendering/VisualScene";
-import {NpcStudio} from "../npc/NpcStudio";
-class AssetBoundary extends Component<{children:ReactNode},{failed:boolean}>{state={failed:false};static getDerivedStateFromError(){return {failed:true};}render(){return this.state.failed?<p role="alert">The 3D viewport could not load. Check the asset path and glTF dependencies.</p>:this.props.children;}}
-export function App(){const [view,setView]=useState<"npc"|"world">("npc");return <main><header><span>ASTERFALL 2.2</span><p>THE LIVING REALMS</p><nav aria-label="Game development views"><button onClick={()=>setView("npc")} aria-current={view==="npc"?"page":undefined}>NPC Studio</button><button onClick={()=>setView("world")} aria-current={view==="world"?"page":undefined}>World development</button></nav></header>
- {view==="npc"?<AssetBoundary><NpcStudio/></AssetBoundary>:<section><p className="eyebrow">SOLTERRA · TERRAVELLE · SERENOVA</p><h1>A world worth inhabiting.</h1><p className="intro">Anime fantasy, sunlit stone courtyards, and a living agricultural realm.</p>{assets.village?<div className="viewport"><AssetBoundary><VisualScene/></AssetBoundary></div>:<article><h2>Visual proof of concept · asset preparation</h2><p>The authored 3D village is not yet loaded in this repository. The new NPC Studio produces resident data and provisional 3D character meshes; it does not override the approved anime visual target.</p><div className="requirements"><div><h3>Character art gate</h3><p>Final custom Solterran anime model, suitable humanoid rig, and verified idle/walk/run animation clips.</p></div><div><h3>Settlement art gate</h3><p>Detailed limestone and plaster architecture, terracotta roofs, paving, foliage and reviewed collision/navigation anchors.</p></div></div><p className="note">NPC Studio is a separate functional generator while authored environment models remain pending.</p></article>}</section>}
- <footer>NPC Studio v0.1 · Shared village population + per-player social progression prototype</footer></main>;}
+import {Component,useState,type ReactNode} from 'react';
+import {SerenovaGame} from '../game/SerenovaGame';
+import {NpcStudio} from '../npc/NpcStudio';
+import './site23.css';
+class GameBoundary extends Component<{children:ReactNode},{failed:boolean}>{state={failed:false};static getDerivedStateFromError(){return {failed:true};}render(){return this.state.failed?<div role="alert" className="game-load-error"><h2>Serenova could not start the 3D scene.</h2><p>Try a desktop browser with WebGL enabled. This build does not yet provide a 2D fallback.</p></div>:this.props.children;}}
+export function App(){
+ const [view,setView]=useState<'play'|'npc'>('play');
+ return <main className="asterfall-shell"><header className="site-head"><div className="site-logo">✦ <span>Asterfall</span><small>2.3</small></div><nav aria-label="Game modes"><button onClick={()=>setView('play')} aria-current={view==='play'?'page':undefined}>Explore Serenova</button><button onClick={()=>setView('npc')} aria-current={view==='npc'?'page':undefined}>NPC Studio</button></nav></header>
+ {view==='play'?<GameBoundary><SerenovaGame/></GameBoundary>:<div className="site-studio"><NpcStudio/></div>}
+ </main>;
+}

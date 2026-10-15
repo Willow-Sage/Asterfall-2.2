@@ -1,33 +1,38 @@
-# Asterfall 2.2: The Living Realms
+# Asterfall 2.3 — The Living Barony
 
-Independent browser project for Serenova, Terravelle and Solterra. **Asterfall 2.1 is untouched.**
+**Playable Serenova orchard-to-market vertical slice.** Browser-based 3D settlement life simulation, built in React / React Three Fiber / Three.js. Preserves the existing NPC Studio as a separate tab. The Asterfall 2.1 repository is untouched.
 
-## NPC Studio — available in the web interface
+## Play the vertical slice
 
-The new NPC Studio generates a population of actual renderable 3D character mesh actors (prototype art), with a separate family and NPC JSON asset registry.
+Start outside the Serenova manor, near Eliana the estate steward. Press **E** to accept the granary commission. Go west to the citrus grove and pick six fruit; collect three timber pieces from the forester's woodpile; visit Lucien's carpenter workshop to turn timber into a crate; carry six citrus and one crate to the granary. The delivery visibly stocks the market, awards crowns, builds Commerce XP and earns renown. Visit Mireya at the market to buy locally made citrus honey, then speak to Eliana again to begin a new day. Each day regenerates the grove and supplies.
 
-- Every household has **2–6 members**; generated populations average **exactly 4**. Parent/child/grandparent ages and reciprocal kinship links are validated.
-- Names, identities, Solterran profession and core skill, appearance parameters, daily schedules, household IDs, and social traits are preserved in exportable JSON.
-- Characters are instantiated as 3D Three.js meshes in the interactive studio preview. **Export selected 3D meshes as .glb**, or export the entire village roster as JSON.
-- A population spawning component has been added to the village rendering pipeline and awaits a reviewed village asset and real navigation anchors.
-- Talk and gift relationship progression is currently a local-session demonstration. Persistent and authoritative multiplayer relationship storage remains to be implemented.
+**Controls:** WASD / arrow keys to move, hold Shift to run, drag to rotate camera, scroll to zoom, E or click interaction prompt to interact, I to open pouch, J for journal, M for map, Escape to close panels. Touch-screen movement and interaction buttons are provided.
 
-**Visual limitations:** Generated mesh bodies are **concept-quality provisional anime-inspired meshes**, not finished Cloudbound Gardener-level character art. Exported GLB meshes are currently static, and runtime pivot movement is not a proper skinned humanoid idle/walk/run rig. This feature must **not** be marked as having achieved the final anime-character art gate.
+**Persistent progress:** Saved locally in the browser with a versioned key (`asterfall-2.3-serenova-save`). Separate computers and browsers do not share saves. This is a single-player vertical slice, **not** an MMO backend.
 
-See [NPC Studio design and acceptance criteria](docs/NPC_STUDIO.md).
+## Current visual scope
 
-## Current world-development status
+The landscape, terracotta-roof buildings, harvestable citrus grove, market stock and characters are temporary in-engine meshes that demonstrate scene composition and gameplay. The characters reuse the earlier Asterfall NPC mesh code, not the approved Cloudbound Gardener production rig. These models **do not** satisfy the final stylized anime art gate. No paid/source-only pack has been republished without a license review; see `docs/ASSET_REQUIREMENTS.md`, `docs/ASSET_LICENSES.md`, and `docs/NPC_STUDIO.md`.
 
-Initial TypeScript/React/Vite modular foundation and gated environment inspection viewport. No approved authored Solterran village model, complete gameplay, physics/navigation, or multiplayer backend are implemented in this repository.
+## Structure
 
-## Development
+- `src/game/sim.ts` — saveable, independent economic/quest simulation and orchard-to-market transitions
+- `src/game/SerenovaScene.tsx` — third-person controller and 3D world composition
+- `src/game/SerenovaGame.tsx` — HUD, map, inventory, journal, interactions and save orchestration
+- `src/game/serenova.css` — low-chrome responsive game UI
+- `src/npc/*` — original NPC Studio generator/export workflows remain available
 
-Use Node 22. Run `npm install`, `npm run dev`, and `npm run build`.
+## Build and deployment
 
-## Art gate
+Install Node 22; `npm install && npm run build`. Start locally with `npm run dev`. GitHub Pages Actions deploys the `dist` output from `main` when enabled under repository Settings → Pages → Source: GitHub Actions. Hosting retains the existing repository path and Vite base `/Asterfall-2.2/`, even though the **game version** is 2.3. Check the Pages workflow before treating a commit as live.
 
-See `docs/ASSET_REQUIREMENTS.md` and `docs/ASSET_LICENSES.md`. Register reviewed GLB character models and approved village models in `src/assets/manifest.ts` and place distributable files in `public/`. The current viewport is not a third-person player controller.
+## Acceptance checks
 
-## Deployment
+1. Talk to Eliana; objective becomes citrus harvest.
+2. Harvest fruit from trees until pouch contains six citrus; confirm fruit visually disappear as they are picked.
+3. Gather timber at the woodpile and craft one crate at the workshop; confirm XP and ingredient consumption.
+4. Deliver to the granary; confirm payout, objective reset, stock displayed at the market stall, and ledger counters.
+5. Buy honey at market; restart the page and confirm saved items, renown, granary stores, market stock and character position.
+6. Speak to Eliana again to start a new day; confirm grove and timber regenerate; NPC Studio still launches.
 
-GitHub Pages from the existing workflow, if configured. Configure Settings → Pages → Source: GitHub Actions. Vite base should be `/Asterfall-2.2/`. **Committing code is not proof that a Pages build or deployment succeeded.**
+Not yet included: server-authoritative multiplayer, detailed skeletal animation, cloud saves, approved production-quality anime character assets, authored 3D architecture, and the wider duchies.
