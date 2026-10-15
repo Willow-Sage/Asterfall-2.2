@@ -129,7 +129,7 @@ function Player({controller,onPosition,initialPosition}:{controller:MutableRefOb
   camera.position.lerp(cameraPoint,1-Math.exp(-dt*5.5));camera.lookAt(target);
   elapsed.current+=dt;if(elapsed.current>.17){elapsed.current=0;onPosition({x:position.current.x,z:position.current.z});}
  });
- return <group ref={group} position={[START.x,0,START.z]}><primitive object={avatar}/><mesh position={[0,.05,0]} rotation={[-Math.PI/2,0,0]}><ringGeometry args={[.45,.55,24]}/><meshBasicMaterial color="#f4d89a" transparent opacity={.8}/></mesh></group>
+ return <group ref={group} position={[initialPosition.x,0,initialPosition.z]}><primitive object={avatar}/><mesh position={[0,.05,0]} rotation={[-Math.PI/2,0,0]}><ringGeometry args={[.45,.55,24]}/><meshBasicMaterial color="#f4d89a" transparent opacity={.8}/></mesh></group>
 }
 function SceneContents({state,controller,onPosition,initialPosition}:{state:GameState;controller:MutableRefObject<Set<string>>;onPosition:(p:Vec2)=>void;initialPosition:Vec2}){
  return <>
