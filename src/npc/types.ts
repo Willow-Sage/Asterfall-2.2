@@ -7,7 +7,7 @@ export type LifeStage = "child" | "teen" | "adult" | "elder";
 export type Kinship = "spouse" | "partner" | "parent" | "child" | "sibling" | "grandparent" | "grandchild" | "aunt_uncle" | "niece_nephew";
 export type RelationLink = { npcId: string; relation: Kinship };
 export type DaySchedule = { at: number; anchor: string; activity: string };
-export type NpcAppearance = { skin: string; hair: string; eyes: string; clothing: string; hairShape: "braid" | "short" | "long" | "curls"; outfit: "workwear" | "scholar" | "artisan"; modelId: string };
+export type NpcAppearance = { skin: string; hair: string; eyes: string; clothing: string; hairShape: "braid" | "short" | "long" | "curls" | "bun" | "ponytail" | "locs" | "waves" | "cropped"; outfit: "workwear" | "scholar" | "artisan" | "noble" | "fieldwear" | "riverwear" | "armored"; modelId: string; accessory?: "none" | "circlet" | "ribbon" | "headscarf" | "earrings" | "glasses" | "satchel" | "apron" | "cape" | "bracers"; accent?: string; height?: number; build?: "slim" | "average" | "broad"; styleNotes?: string };
 export type Npc = {
   id: string;
   householdId: string;
@@ -26,6 +26,8 @@ export type Npc = {
   favoriteGift: string;
   dislikedGift: string;
   ambition: string;
+  bio?: string;
+  greeting?: string;
   family: RelationLink[];
   schedule: DaySchedule[];
   appearance: NpcAppearance;
